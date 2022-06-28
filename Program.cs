@@ -45,8 +45,18 @@ namespace IotBasicExample
                     defaultGotFromDeviceTwin = true;
                 }                 
             });
+
+            // handle direct method call
+            await deviceClient.SetMethodHandlerAsync("UpdateFirmware", OnMethodHandler, null);
+
             SendDeviceToCloudMessagesAsync();
             Console.ReadLine();            
+        }
+
+        private static Task<MethodResponse> OnMethodHandler(MethodRequest methodRequest, object userContext)
+        {
+            Console.WriteLine($"method {methodRequest.Name} handled with body {methodRequest.DataAsJson}");
+            return Task.FromResult(new MethodResponse(new byte[0], 200));
         }
 
         private static void SetRefreshRate(int seconds)
