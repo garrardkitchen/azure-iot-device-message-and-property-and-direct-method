@@ -1,0 +1,5 @@
+launchSettings.json
+*.dll
+bin/
+obj/
+.vs/
