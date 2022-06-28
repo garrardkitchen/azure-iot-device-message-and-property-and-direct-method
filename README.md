@@ -1,5 +1,20 @@
+# Getting started
 
-Create env var:
+This sample programmatically demonstrates this functionality:
+- Sending a message to the IoT Hub
+- Handling a Desired Property change
+- Handing a Direct Method call
+- Accessing the Device Twin
+
+This sample has a dependency on the IoT Hub Device SDK only:
+
+```powershell
+dotnet add package Microsoft.Azure.Devices.Client --version 1.41.0
+```
+
+Azure IoT SDK for .NET GH repo: https://github.com/Azure/azure-iot-sdk-csharp
+
+## Create env var
 
 ```powershell
 [System.Environment]::SetEnvironmentVariable('DEVICE_CONNECTION_STRING','HostName=<hub-name>.azure-devices.net;DeviceId=<device-id>;SharedAccessKey=<key>')
@@ -7,14 +22,12 @@ Create env var:
 
 👆 If you don't set this env var, you'll receive this null reference exception: `The DEVICE_CONNECTION_STRING environment variable is missing`
 
-Add desired property to device twin:
+## Add desired property to device twin
 
 ```json
-...
 "properties": {
     "desired": {
         "refeshRateInSeconds": 60,
-...
 ```
 
 OR
@@ -23,19 +36,19 @@ OR
 az iot hub device-twin update -n <hub-name> -d <device-id> --desired '{"refeshRateInSeconds":5}'
 ```
 
-To execute a direct method (UpdateFirmware):
+## To execute a direct method (UpdateFirmware)
 
 ```powershell
 az iot hub invoke-device-method -n <hub-name> --device-id <device-name> --method-name "UpdateFirmware" --method-payload "{}"
 ```
 
-To stream events:
+## To stream events
 
 ```powershell
 az iot hub monitor-events --hub-name <hub-name>
 ```
 
-To run:
+## To run
 
 ```powershell
 dotnet restore
